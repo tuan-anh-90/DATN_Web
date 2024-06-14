@@ -1,0 +1,244 @@
+.box {
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+h1 {
+  font-size: 24px;
+}
+
+table {
+  width: 70%;
+  border-collapse: collapse;
+  margin: auto;
+}
+
+table,
+th,
+td {
+  border: 1px solid #ccc;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: center;
+}
+
+thead th:nth-child(1) {
+  width: 5%;
+}
+
+thead th:nth-child(2) {
+  width: 20%;
+}
+
+thead th:nth-child(3) {
+  width: 20%;
+}
+
+thead th:nth-child(4) {
+  width: 15%;
+}
+
+thead th:nth-child(5) {
+  width: 15%;
+}
+
+thead th:nth-child(6) {
+  width: 15%;
+}
+
+thead th:nth-child(7) {
+  width: 10%;
+}
+
+button {
+  margin: 5px 5px;
+  padding: 8px 16px;
+  background-color: #358399;
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.create-user-btn {
+  width: 100px;
+  height: 40px;
+  background-color: transparent;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+  /* Thêm hiệu ứng chuyển động */
+}
+
+.create-user-btn:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+  /* Tạo hiệu ứng bóng khi hover */
+}
+
+#createUserBtn {
+  margin-bottom: 30px;
+}
+
+.popup-Edit {
+  display: none;
+  position: fixed;
+  top: 10%;
+  bottom: 30%;
+  left: 30%;
+  right: 30%;
+  width: 40%;
+  height: 60%;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.popup {
+  display: none;
+  /* Hidden by default, can be shown with JS */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  /* Ensure it appears above other content */
+}
+
+/* Style for the popup content */
+.popup-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  /* Adjust width as needed */
+  max-width: 90%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  margin-top: 10%;
+  margin-left: 35%;
+}
+
+.popup-content-Edit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.popup-content-Edit {
+  height: 100%;
+}
+
+
+.form-control-Edit {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  margin-left: 4%;
+  text-align: left;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 90%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Style for the close button */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* Style for form groups */
+.form-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  /* Adjust spacing between fields as needed */
+  margin-bottom: 15px;
+}
+
+/* Style for form controls */
+.form-control {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-control label {
+  margin-bottom: 5px;
+}
+
+/* Style for inputs and selects */
+.form-control input,
+.form-control select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Set different flex values for large and small controls */
+.form-control.large {
+  flex: 2;
+}
+
+.form-control.small {
+  flex: 1;
+}
+
+.form-control.full-width {
+  width: 100%;
+  flex: none;
+}
+
+/* Style for the submit button */
+.form-control button {
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.form-control button:hover {
+  background-color: darkgreen;
+}
+
+/* Show the popup */
+#popup.show {
+  display: flex;
+}

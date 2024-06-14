@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link href="/baidang/baidang.css" rel="stylesheet" type="text/css" />
+    <title>User | Home</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        background-color: #e0e0e0; /* Optional: background color for the body */
+      }
+
+      .bo {
+        font-family: "Times New Roman", Times, serif;
+        background-color: #f0f0f0;
+        width: 80%;
+        max-width: 1200px;
+        padding: 20px;
+        border-radius: 10px;
+      }
+
+      .thehr {
+        width: 90%;
+        margin: 0 auto;
+      }
+
+      .daubo {
+        text-align: center;
+      }
+
+      .daubo h2 {
+        padding-top: 20px;
+        margin-bottom: 20px;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        border-radius: 20px;
+        margin: 10px 0;
+        background-color: #c8c6c6; /* Grey background */
+      }
+
+      .con-container {
+        flex-direction: row !important;
+        background-color: #c8c6c6;
+        display: flex;
+        border-radius: 20px;
+        padding: 10px;
+        align-items: center;
+      }
+
+      .bentrai {
+        width: 100%;
+        text-align: center;
+      }
+
+      .bentrai .post-image {
+        height: 150px;
+        width: 150px;
+        border-radius: 20px;
+        cursor: pointer;
+      }
+
+      .benphai {
+        display: none;
+        /* Hide initially */
+      }
+
+      /* Style cho ngày đăng */
+      .ngaydang {
+        color: #777;
+        text-align: center;
+        margin-top: 10px;
+      }
+
+      @media screen and (max-width: 768px) {
+        .container {
+          flex-direction: column;
+        }
+
+        .con-container {
+          flex-direction: column;
+        }
+
+        .bentrai .post-image {
+          width: 100%;
+          height: auto;
+        }
+
+        .ngaydang {
+          display: none;
+        }
+      }
+
+      /* Popup styles */
+      .popup {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .popup-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+        border-radius: 10px;
+      }
+
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bo">
+      <div class="daubo">
+        <h2>
+          <i class="fa-regular fa-bell"></i> Tài liệu, thông tin, thông báo của
+          công ty
+        </h2>
+      </div>
+      <hr class="thehr" />
+      <div id="postsContainer" class="big-container"></div>
+    </div>
+
+    <div id="popup" class="popup">
+      <div class="popup-content">
+        <span class="close">&times;</span>
+        <h1 id="popupTitle"></h1>
+        <p id="popupContent"></p>
+        <p id="popupDate"></p>
+      </div>
+    </div>
+
+    <script>
+      function formatDateTime(dateTime) {
+        try {
+          const options = {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+          };
+
+          const formattedDate = new Intl.DateTimeFormat(
+            "vi-VN",
+            options
+          ).format(new Date(dateTime));
+
+          if (formattedDate !== "Invalid Date") {
+            return formattedDate;
+          } else {
+            throw new Error("Invalid date value");
+          }
+        } catch (error) {
+          console.error("Error formatting date:", error.message);
+          return "Invalid Date";
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Thực hiện yêu cầu GET đến API
+        fetch("/api/homes/")
+          .then((response) => response.json())
+          .then((data) => displayPosts(data))
+          .catch((error) => console.error("Error:", error));
+      });
+
+      function displayPosts(posts) {
+        var postsContainer = document.getElementById("postsContainer");
+
+        posts.forEach((post) => {
+          var postContainer = document.createElement("div");
+          postContainer.classList.add("container");
+
+          // Add the "con-container" class to each post's parent container
+          var conContainerDiv = document.createElement("div");
+          conContainerDiv.classList.add("con-container");
+
+          var bentraiDiv = document.createElement("div");
+          bentraiDiv.classList.add("bentrai");
+
+          const postImage = document.createElement("img");
+          postImage.classList.add("post-image");
+          postImage.src = post.anh;
+          postImage.alt = "Hình ảnh mô tả";
+
+          postImage.addEventListener("click", function () {
+            showPopup(post.tieuDe, post.noiDung, post.tgbd);
+          });
+
+          bentraiDiv.appendChild(postImage);
+
+          var ngaydangP = document.createElement("p");
+          ngaydangP.classList.add("ngaydang");
+          ngaydangP.textContent = "Ngày đăng: " + formatDateTime(post.tgbd);
+
+          bentraiDiv.appendChild(ngaydangP);
+
+          conContainerDiv.appendChild(bentraiDiv);
+
+          postContainer.appendChild(conContainerDiv);
+
+          postsContainer.appendChild(postContainer);
+        });
+      }
+
+      function showPopup(title, content, date) {
+        var popup = document.getElementById("popup");
+        document.getElementById("popupTitle").textContent = title;
+        document.getElementById("popupContent").textContent = content;
+        document.getElementById("popupDate").textContent =
+          "Ngày đăng: " + formatDateTime(date);
+
+        popup.style.display = "block";
+      }
+
+      document.querySelector(".close").addEventListener("click", function () {
+        document.getElementById("popup").style.display = "none";
+      });
+
+      window.addEventListener("click", function (event) {
+        var popup = document.getElementById("popup");
+        if (event.target == popup) {
+          popup.style.display = "none";
+        }
+      });
+    </script>
+  </body>
+</html>
